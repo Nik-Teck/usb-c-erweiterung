@@ -119,7 +119,12 @@ a.lnk{font-weight:bold;color:#0B3A7A}
 @media screen and (max-width:760px){
   .sheet{padding:14px 12px;min-height:0;margin:10px 0}
   .fg .im{width:100%}ol.leg{grid-template-columns:1fr}
-  body{--fs:17px}
+  :root{--fs:17px}
+  .sheet{overflow:hidden;min-width:0}
+  .body{min-width:0;overflow-wrap:anywhere}
+  table{font-size:.78em}th,td{padding:5px 4px}td.c{width:30px}td.c input{width:20px;height:20px}td.c+td{min-width:7.6em;overflow-wrap:break-word}
+  .toc li{min-width:0}.toc li a.row{min-width:0}.toc li .nm{flex:0 1 auto;min-width:0}.toc li .d{min-width:8px}
+  .tools-in{padding:8px 10px}
 }
 @media print{
   .lb{display:none!important}

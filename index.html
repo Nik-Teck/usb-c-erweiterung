@@ -100,7 +100,8 @@ ol.leg .n.pin1{border-radius:4px;background:#0A6CD6}ol.leg .n.warn{background:va
 .title h1{font-size:2.6em;margin:.25em 0}
 .title h1+p{font-size:1.4em;margin:0}
 .sig td{height:42px}
-img.mini,.wrap{cursor:zoom-in}
+img.mini,.wrap{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+@media (hover:hover){img.mini,.wrap{cursor:zoom-in}}
 .lb{position:fixed;left:0;top:0;right:0;bottom:0;z-index:1000;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 56px) 12px calc(env(safe-area-inset-bottom,0px) + 12px)}
 .lb.on{display:flex}
 .lb img{max-width:100%;max-height:100%;width:auto;height:auto;background:#fff;object-fit:contain;cursor:default;box-shadow:0 4px 30px rgba(0,0,0,.6)}
@@ -115,7 +116,7 @@ a.lnk{font-weight:bold;color:#0B3A7A}
 .big-ck input{width:30px;height:30px}
 .gate{margin-top:14px;padding:12px;border:4px solid var(--warn);font:bold 1.3em Arial,sans-serif;text-align:center;color:var(--warn)}
 .gate.go{border-color:var(--wis);color:var(--wis)}
-@media (max-width:760px){
+@media screen and (max-width:760px){
   .sheet{padding:14px 12px;min-height:0;margin:10px 0}
   .fg .im{width:100%}ol.leg{grid-template-columns:1fr}
   body{--fs:17px}
@@ -783,12 +784,12 @@ function openLB(src,alt){const i=lb.querySelector('img');i.src=src;i.alt=alt||''
 function closeLB(){lb.classList.remove('on');document.body.style.overflow=''}
 lb.addEventListener('click',e=>{if(e.target.tagName!=='IMG')closeLB()});
 addEventListener('keydown',e=>{if(e.key==='Escape')closeLB()});
-document.addEventListener('click',e=>{const w=e.target.closest('.wrap');const m=e.target.closest('img.mini');const im=w?w.querySelector('img'):m;if(im)openLB(im.src,im.alt)});
+document.querySelectorAll('.wrap,img.mini').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const im=el.tagName==='IMG'?el:el.querySelector('img');if(im)openLB(im.src,im.alt)}));
 /* Schriftgröße */
 let fs=18;const root=document.documentElement;
 function setfs(v){fs=Math.max(15,Math.min(26,v));root.style.setProperty('--fs',fs+'px');fitSoon()}
 document.getElementById('fp').onclick=()=>setfs(fs+2);document.getElementById('fm').onclick=()=>setfs(fs-2);
-document.getElementById('pr').onclick=()=>{try{window.print()}catch(e){}};
+document.getElementById('pr').onclick=()=>{fit();const ua=navigator.userAgent;if(/iPhone|iPad|iPod/.test(ua)&&/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua)){alert('In diesem Browser ist Drucken auf iPhone/iPad nicht möglich. Bitte die Seite in Safari öffnen und dort Teilen → Drucken wählen.');return}setTimeout(()=>{try{window.print()}catch(e){alert('Drucken wird in diesem Browser nicht unterstützt. Bitte im Browsermenü Drucken bzw. Teilen → Drucken wählen.')}},80)};
 </script>
 </body>
 </html>
